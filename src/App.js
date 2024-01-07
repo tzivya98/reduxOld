@@ -1,24 +1,27 @@
 import logo from './logo.svg';
 import './App.css';
+import { useSelector } from 'react-redux';
+import Library from './componentes/library';
+import Details from './componentes/Details';
+import Edit from './componentes/Edit';
+import AddBookItem from './componentes/AddBook';
+import { useState } from 'react';
 
 function App() {
+  let selectedB=useSelector(sta=>sta.selectedBook)
+  let selectedForEdit=useSelector(sta=>sta.selectedBookForEdit)
+  let [isShow,setIsShow]=useState(false);
+  function showExperience(){
+    setIsShow(!isShow)
+  }
+  console.log(selectedB)
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+    <Library showExperience={showExperience}/>
+    {isShow&&<AddBookItem showExperience={showExperience} />} 
+    {selectedB && <Details/>}
+    {selectedForEdit && <Edit/>}
+    </>
   );
 }
 
